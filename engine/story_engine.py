@@ -1,57 +1,126 @@
 """
 engine/story_engine.py
 Generates personalized Día de los Muertos memorials and Gothic Ghost stories.
-Supports local Ollama LLMs with intelligent offline generation fallback.
+Integrated with OpenRouter SDK (default: google/gemma-4-26b-a4b-it:free),
+with fallback support for local Ollama and offline heuristic synthesis.
 """
 
+import os
 import json
 import random
 import requests
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+# Load environment variables from .env
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
-def query_ollama(prompt: str, model: str = "llama3.1") -> str:
-    """Attempts to generate text using local Ollama instance."""
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
+DEFAULT_MODEL = os.environ.get("OPENROUTER_MODEL", "google/gemma-4-26b-a4b-it:free").strip()
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434/api/generate").strip()
+
+
+def query_openrouter(prompt: str, model: str = None) -> Tuple[str, str]:
+    """
+    Queries OpenRouter using OpenRouter SDK with HTTP fallback.
+    Returns (generated_text, source_name).
+    """
+    target_model = model or DEFAULT_MODEL
+    api_key = os.environ.get("OPENROUTER_API_KEY", OPENROUTER_API_KEY).strip()
+
+    if api_key:
+        # 1. Try Official OpenRouter SDK
+        try:
+            from openrouter import OpenRouter
+            client = OpenRouter(
+                api_key=api_key,
+                http_referer="https://github.com/DracFiendMG/spectral-stories",
+                x_open_router_title="Spectral Stories"
+            )
+            resp = client.chat.send(
+                messages=[{"role": "user", "content": prompt}],
+                model=target_model,
+                temperature=0.75,
+            )
+            if resp and resp.choices and len(resp.choices) > 0:
+                text = resp.choices[0].message.content
+                if text and len(text.strip()) > 30:
+                    return text.strip(), f"OpenRouter ({target_model})"
+        except Exception as e:
+            print(f"[OpenRouter SDK Notice] {e}. Trying HTTP fallback...")
+
+        # 2. Try Direct OpenRouter HTTP endpoint
+        try:
+            headers = {
+                "Authorization": f"Bearer {api_key}",
+                "HTTP-Referer": "https://github.com/DracFiendMG/spectral-stories",
+                "X-Title": "Spectral Stories",
+                "Content-Type": "application/json"
+            }
+            body = {
+                "model": target_model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.75
+            }
+            r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=body, timeout=15)
+            if r.status_code == 200:
+                data = r.json()
+                choices = data.get("choices", [])
+                if choices:
+                    text = choices[0].get("message", {}).get("content", "")
+                    if text and len(text.strip()) > 30:
+                        return text.strip(), f"OpenRouter ({target_model})"
+            else:
+                print(f"[OpenRouter HTTP Notice] {r.status_code}: {r.text[:200]}")
+        except Exception as e:
+            print(f"[OpenRouter HTTP Exception] {e}")
+
+    # 3. Fallback to Local Ollama if running
     try:
-        payload = {
-            "model": model,
+        ollama_payload = {
+            "model": "llama3.1",
             "prompt": prompt,
             "stream": False,
-            "options": {"temperature": 0.75, "top_p": 0.9}
+            "options": {"temperature": 0.75}
         }
-        resp = requests.post(OLLAMA_URL, json=payload, timeout=6)
+        resp = requests.post(OLLAMA_URL, json=ollama_payload, timeout=3)
         if resp.status_code == 200:
-            return resp.json().get("response", "").strip()
+            text = resp.json().get("response", "").strip()
+            if text and len(text) > 40:
+                return text, "Ollama (Local Open Weights)"
     except Exception:
         pass
-    return None
+
+    return None, None
 
 
 def generate_ofrenda_memorial(name: str, relationship: str, memory: str, offerings: List[str]) -> Dict[str, Any]:
     """
-    Creates an evocative, respectful Día de los Muertos memorial piece.
+    Creates an evocative, respectful Día de los Muertos memorial tribute.
     """
     offerings_str = ", ".join(offerings) if offerings else "golden cempasúchil petals, glowing candles, and quiet love"
 
     prompt = (
         f"You are honoring the sacred Mexican tradition of Día de los Muertos. "
-        f"Write a beautiful, poetic, and heartwarming memorial for {name}, who is a beloved {relationship}. "
-        f"A cherished memory of them: '{memory}'. "
-        f"Placed upon their altar are offerings of: {offerings_str}. "
+        f"Write a beautiful, poetic, and heartwarming memorial tribute for {name}, who is a beloved {relationship}. "
+        f"A cherished memory or trait of them: '{memory}'. "
+        f"Placed upon their ofrenda (altar) are offerings of: {offerings_str}. "
         f"Weave this into a 2-3 paragraph poetic tribute. Emphasize how their laughter and soul linger warmly in our hearts, "
-        f"how the scent of marigolds guides their spirit home tonight, and that no one is truly gone while they are remembered."
+        f"how the scent of marigolds and copal guides their spirit home tonight, and that no one is truly gone while they are remembered. "
+        f"Write only the memorial text directly with reverence."
     )
 
-    ollama_result = query_ollama(prompt)
-    if ollama_result and len(ollama_result) > 100:
+    ai_text, source = query_openrouter(prompt)
+    if ai_text:
         return {
-            "source": "Ollama (Llama 3.1 Open Weights)",
+            "source": source,
             "title": f"The Altar for {name}",
-            "eulogy": ollama_result
+            "eulogy": ai_text
         }
 
-    # Rich poetic local generation fallback
     templates = [
         (
             f"Tonight, the boundary between worlds softens into amber warmth. Upon this altar, we spread vibrant "
@@ -75,11 +144,10 @@ def generate_ofrenda_memorial(name: str, relationship: str, memory: str, offerin
         )
     ]
 
-    selected_text = random.choice(templates)
     return {
-        "source": "Spectral Open Intelligence Engine",
+        "source": "Spectral Open Intelligence Engine (Offline Fallback)",
         "title": f"In Loving Memory of {name}",
-        "eulogy": selected_text
+        "eulogy": random.choice(templates)
     }
 
 
@@ -94,20 +162,20 @@ def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
     dev = anomaly_summary.get("deviation_pct", 100.0)
 
     prompt = (
-        f"Write a short, spine-chilling gothic horror story (150-250 words) about a ghost haunting modern technology. "
-        f"Telemetry logs at {timestamp} registered a horrifying {severity}: {culprit} shifted violently to {val} "
-        f"(a deviation of {dev}%). What supernatural entity awakened in the circuitry, and what did the human discover in the dark?"
+        f"Write a short, spine-chilling gothic horror story (150-200 words) about a ghost in the machine. "
+        f"System telemetry logs at {timestamp} registered a horrifying {severity}: {culprit} shifted violently to {val} "
+        f"(a deviation of {dev}%). What supernatural entity awakened in the circuitry, and what did the technician discover in the dark? "
+        f"Write with atmospheric tension."
     )
 
-    ollama_result = query_ollama(prompt)
-    if ollama_result and len(ollama_result) > 80:
+    ai_text, source = query_openrouter(prompt)
+    if ai_text:
         return {
-            "source": "Ollama (Llama 3.1 Open Weights)",
-            "title": f"The Entity of {timestamp}",
-            "story": ollama_result
+            "source": source,
+            "title": f"Incident Record: {timestamp}",
+            "story": ai_text
         }
 
-    # High-atmosphere gothic fallback lore
     stories = [
         (
             f"It was precisely {timestamp} when the silent monitors flickered with impossible numbers. The sensors registered a sudden, "
@@ -128,7 +196,7 @@ def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
     ]
 
     return {
-        "source": "Spectral Open Intelligence Engine",
+        "source": "Spectral Open Intelligence Engine (Offline Fallback)",
         "title": f"Incident Record: {timestamp}",
         "story": random.choice(stories)
     }
