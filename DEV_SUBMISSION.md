@@ -2,8 +2,8 @@
 title: "Spectral Stories: Where Open-Source AI Meets the Spirits of Memory"
 published: true
 tags: devchallenge, hf26challenge, ai, opensource
-cover_image: https://raw.githubusercontent.com/your-username/spectral-stories/main/assets/cover.png
-canonical_url: https://dev.to/your-username/spectral-stories-ghost-in-the-machine
+cover_image: https://raw.githubusercontent.com/DracFiendMG/spectral-stories/main/assets/cover.png
+canonical_url: https://dev.to/DracFiendMG/spectral-stories-ghost-in-the-machine
 ---
 
 *This article is a submission for the [Hacktoberfest Open-Source AI Challenge: Week 4 — "Ghost in the Machine"](https://dev.to/challenges/hacktoberfest-week4-2026-10-26).*
@@ -21,7 +21,7 @@ At the same time, we live in a world where technology collects our daily footpri
 Introducing **Spectral Stories** 🪔👻:
 An open-source AI platform combining an **Interactive Digital Ofrenda** with a **Tabular Anomaly Ghost Story Generator**.
 
-[![Spectral Stories Demo Banner](https://raw.githubusercontent.com/your-username/spectral-stories/main/assets/banner.png)](https://spectral-stories.onrender.com)
+[![Spectral Stories Demo Banner](https://raw.githubusercontent.com/DracFiendMG/spectral-stories/main/assets/banner.png)](https://spectral-stories.onrender.com)
 
 ### Key Capabilities:
 
@@ -54,18 +54,18 @@ An open-source AI platform combining an **Interactive Digital Ofrenda** with a *
 
 | Interactive Digital Ofrenda | TabPFN Anomaly Detection |
 | :---: | :---: |
-| ![Digital Ofrenda](https://raw.githubusercontent.com/your-username/spectral-stories/main/assets/screenshot-ofrenda.png) | ![TabPFN Paranormal Log](https://raw.githubusercontent.com/your-username/spectral-stories/main/assets/screenshot-anomaly.png) |
+| ![Digital Ofrenda](https://raw.githubusercontent.com/DracFiendMG/spectral-stories/main/assets/screenshot-ofrenda.png) | ![TabPFN Paranormal Log](https://raw.githubusercontent.com/DracFiendMG/spectral-stories/main/assets/screenshot-anomaly.png) |
 
 ---
 
 ## 💻 3. Code & Open-Source Repository
 
-- **GitHub Repository**: [https://github.com/your-username/spectral-stories](https://github.com/your-username/spectral-stories)
+- **GitHub Repository**: [https://github.com/DracFiendMG/spectral-stories](https://github.com/DracFiendMG/spectral-stories)
 - **License**: MIT Permissive Open Source License
 
 ```bash
 # Clone and run locally in under 60 seconds
-git clone https://github.com/your-username/spectral-stories.git
+git clone https://github.com/DracFiendMG/spectral-stories.git
 cd spectral-stories
 pip install -r requirements.txt
 python server.py
@@ -149,7 +149,7 @@ That is the true "Ghost in the Machine": not a threat, but the enduring echo of 
 ## 🏆 7. Prize Categories Entered
 
 ### 🥇 1. Best Use of Render
-- **Implementation**: Spectral Stories is packaged with a declarative [`render.yaml`](https://github.com/your-username/spectral-stories/blob/main/render.yaml) specification. The full Python API and static frontend are served as a lightning-fast web service with zero cold-start latency.
+- **Implementation**: Spectral Stories is packaged with a declarative [`render.yaml`](https://github.com/DracFiendMG/spectral-stories/blob/main/render.yaml) specification. The full Python API and static frontend are served as a lightning-fast web service with zero cold-start latency.
 - **Evidence**: Live on Render at `https://spectral-stories.onrender.com`.
 
 ### 🥈 2. Best Use of TabPFN (Prior Labs)

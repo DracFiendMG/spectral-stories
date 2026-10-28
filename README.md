@@ -47,7 +47,7 @@ graph TD
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/spectral-stories.git
+git clone https://github.com/DracFiendMG/spectral-stories.git
 cd spectral-stories
 
 # Install Python requirements
