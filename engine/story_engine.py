@@ -1,14 +1,11 @@
-"""
-engine/story_engine.py
-Generates personalized Día de los Muertos memorials and Gothic Ghost stories.
-Integrated with OpenRouter SDK (default: google/gemma-4-26b-a4b-it:free),
-with fallback support for local Ollama and offline heuristic synthesis.
-"""
+# engine/story_engine.py
+# Spectral Stories - Memorial and Gothic Lore Generation
+# Powered by Backboard SDK with google/gemma-4-26b-a4b-it
 
 import os
 import json
 import random
-import requests
+import asyncio
 from typing import Dict, Any, List, Tuple
 
 # Load environment variables from .env
@@ -18,109 +15,85 @@ try:
 except ImportError:
     pass
 
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
-DEFAULT_MODEL = os.environ.get("OPENROUTER_MODEL", "google/gemma-4-26b-a4b-it:free").strip()
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434/api/generate").strip()
+BACKBOARD_API_KEY = os.environ.get("BACKBOARD_API_KEY", "").strip()
+DEFAULT_MODEL = os.environ.get("BACKBOARD_MODEL", "google/gemma-4-26b-a4b-it").strip()
 
 
-def query_openrouter(prompt: str, model: str = None) -> Tuple[str, str]:
+async def query_backboard_async(prompt: str, model: str = None) -> Tuple[str, str]:
     """
-    Queries OpenRouter using OpenRouter SDK with HTTP fallback.
-    Returns (generated_text, source_name).
+    Sends prompt to Backboard SDK targeting google/gemma-4-26b-a4b-it.
+    Returns (generated_text, source_label).
     """
     target_model = model or DEFAULT_MODEL
-    api_key = os.environ.get("OPENROUTER_API_KEY", OPENROUTER_API_KEY).strip()
+    api_key = os.environ.get("BACKBOARD_API_KEY", BACKBOARD_API_KEY).strip()
 
-    if api_key:
-        # 1. Try Official OpenRouter SDK
-        try:
-            from openrouter import OpenRouter
-            client = OpenRouter(
-                api_key=api_key,
-                http_referer="https://github.com/DracFiendMG/spectral-stories",
-                x_open_router_title="Spectral Stories"
-            )
-            resp = client.chat.send(
-                messages=[{"role": "user", "content": prompt}],
-                model=target_model,
-                temperature=0.75,
-            )
-            if resp and resp.choices and len(resp.choices) > 0:
-                text = resp.choices[0].message.content
-                if text and len(text.strip()) > 30:
-                    return text.strip(), f"OpenRouter ({target_model})"
-        except Exception as e:
-            print(f"[OpenRouter SDK Notice] {e}. Trying HTTP fallback...")
+    if not api_key:
+        return None, None
 
-        # 2. Try Direct OpenRouter HTTP endpoint
-        try:
-            headers = {
-                "Authorization": f"Bearer {api_key}",
-                "HTTP-Referer": "https://github.com/DracFiendMG/spectral-stories",
-                "X-Title": "Spectral Stories",
-                "Content-Type": "application/json"
-            }
-            body = {
-                "model": target_model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.75
-            }
-            r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=body, timeout=15)
-            if r.status_code == 200:
-                data = r.json()
-                choices = data.get("choices", [])
-                if choices:
-                    text = choices[0].get("message", {}).get("content", "")
-                    if text and len(text.strip()) > 30:
-                        return text.strip(), f"OpenRouter ({target_model})"
-            else:
-                print(f"[OpenRouter HTTP Notice] {r.status_code}: {r.text[:200]}")
-        except Exception as e:
-            print(f"[OpenRouter HTTP Exception] {e}")
-
-    # 3. Fallback to Local Ollama if running
+    provider = os.environ.get("BACKBOARD_PROVIDER", "openrouter").strip()
     try:
-        ollama_payload = {
-            "model": "llama3.1",
-            "prompt": prompt,
-            "stream": False,
-            "options": {"temperature": 0.75}
-        }
-        resp = requests.post(OLLAMA_URL, json=ollama_payload, timeout=3)
-        if resp.status_code == 200:
-            text = resp.json().get("response", "").strip()
-            if text and len(text) > 40:
-                return text, "Ollama (Local Open Weights)"
-    except Exception:
-        pass
+        from backboard import BackboardClient
+        async with BackboardClient(api_key=api_key) as client:
+            resp = await client.send_message(
+                content=prompt,
+                llm_provider=provider if provider else None,
+                model_name=target_model,
+                stream=False
+            )
+            text = resp.content if resp and hasattr(resp, "content") else ""
+            if not text and hasattr(resp, "messages") and resp.messages:
+                for m in reversed(resp.messages):
+                    if getattr(m, "role", "") == "assistant" and getattr(m, "content", ""):
+                        text = m.content
+                        break
+
+            if text and len(text.strip()) > 30:
+                return text.strip(), f"Backboard ({target_model})"
+    except Exception as e:
+        print(f"[Backboard SDK Notice] {e}")
 
     return None, None
 
 
-def generate_ofrenda_memorial(name: str, relationship: str, memory: str, offerings: List[str]) -> Dict[str, Any]:
+def query_backboard_sync(prompt: str, model: str = None) -> Tuple[str, str]:
+    """Synchronous wrapper around query_backboard_async."""
+    try:
+        loop = asyncio.get_event_loop()
+        if loop.is_running():
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                return pool.submit(asyncio.run, query_backboard_async(prompt, model)).result()
+        else:
+            return loop.run_until_complete(query_backboard_async(prompt, model))
+    except Exception:
+        return asyncio.run(query_backboard_async(prompt, model))
+
+
+async def generate_ofrenda_memorial(name: str, relationship: str, memory: str, offerings: List[str]) -> Dict[str, Any]:
     """
     Creates an evocative, respectful Día de los Muertos memorial tribute.
     """
-    offerings_str = ", ".join(offerings) if offerings else "golden cempasúchil petals, glowing candles, and quiet love"
+    offerings_str = ", ".join(offerings) if offerings else "golden cempasúchil petals, glowing tapers, and quiet love"
 
     prompt = (
-        f"You are honoring the sacred Mexican tradition of Día de los Muertos. "
-        f"Write a beautiful, poetic, and heartwarming memorial tribute for {name}, who is a beloved {relationship}. "
+        f"You are writing a tribute for a Dia de los Muertos altar (ofrenda). "
+        f"Write a beautiful, poetic, and heartwarming remembrance for {name}, who is a beloved {relationship}. "
         f"A cherished memory or trait of them: '{memory}'. "
-        f"Placed upon their ofrenda (altar) are offerings of: {offerings_str}. "
+        f"Placed upon their ofrenda are offerings of: {offerings_str}. "
         f"Weave this into a 2-3 paragraph poetic tribute. Emphasize how their laughter and soul linger warmly in our hearts, "
-        f"how the scent of marigolds and copal guides their spirit home tonight, and that no one is truly gone while they are remembered. "
-        f"Write only the memorial text directly with reverence."
+        f"how the golden marigolds and incense guide their spirit home tonight, and that no one is truly gone while they are remembered. "
+        f"Write with tenderness, cultural reverence, and poetic grace. Do not include markdown headers or meta commentary."
     )
 
-    ai_text, source = query_openrouter(prompt)
+    ai_text, source = await query_backboard_async(prompt)
     if ai_text:
         return {
-            "source": source,
+            "source": "Altar Inscription",
             "title": f"The Altar for {name}",
             "eulogy": ai_text
         }
 
+    # Thoughtfully crafted fallback tributes
     templates = [
         (
             f"Tonight, the boundary between worlds softens into amber warmth. Upon this altar, we spread vibrant "
@@ -145,15 +118,15 @@ def generate_ofrenda_memorial(name: str, relationship: str, memory: str, offerin
     ]
 
     return {
-        "source": "Spectral Open Intelligence Engine (Offline Fallback)",
+        "source": "Altar Inscription",
         "title": f"In Loving Memory of {name}",
         "eulogy": random.choice(templates)
     }
 
 
-def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
+async def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Translates tabular telemetry anomalies into a chilling gothic ghost story.
+    Translates tabular telemetry anomalies into an atmospheric gothic story.
     """
     culprit = anomaly_summary.get("primary_culprit", "ambient sensor")
     val = anomaly_summary.get("observed_value", "unknown")
@@ -162,16 +135,16 @@ def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
     dev = anomaly_summary.get("deviation_pct", 100.0)
 
     prompt = (
-        f"Write a short, spine-chilling gothic horror story (150-200 words) about a ghost in the machine. "
-        f"System telemetry logs at {timestamp} registered a horrifying {severity}: {culprit} shifted violently to {val} "
-        f"(a deviation of {dev}%). What supernatural entity awakened in the circuitry, and what did the technician discover in the dark? "
-        f"Write with atmospheric tension."
+        f"Write a short, spine-chilling gothic horror vignette (150-200 words) about a ghost in modern machinery. "
+        f"System telemetry logs at {timestamp} registered an anomaly: {culprit} shifted abruptly to {val} "
+        f"(a deviation of {dev}%). What lingering presence stirred in the circuitry, and what was found in the dark? "
+        f"Write with atmospheric tension, literary prose, and suspense. Do not use meta commentary."
     )
 
-    ai_text, source = query_openrouter(prompt)
+    ai_text, source = await query_backboard_async(prompt)
     if ai_text:
         return {
-            "source": source,
+            "source": "Incident Lore",
             "title": f"Incident Record: {timestamp}",
             "story": ai_text
         }
@@ -196,7 +169,7 @@ def generate_haunting_lore(anomaly_summary: Dict[str, Any]) -> Dict[str, Any]:
     ]
 
     return {
-        "source": "Spectral Open Intelligence Engine (Offline Fallback)",
+        "source": "Incident Lore",
         "title": f"Incident Record: {timestamp}",
         "story": random.choice(stories)
     }

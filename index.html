@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectral Stories — Digital Ofrenda & Ghost in the Machine</title>
-    <meta name="description" content="An open-source AI platform blending Día de los Muertos remembrance altars with TabPFN tabular anomaly detection for Hacktoberfest 2026.">
+    <title>Spectral Stories — Digital Ofrenda & Environmental Telemetry</title>
+    <meta name="description" content="An interactive remembrance altar honoring Día de los Muertos tradition alongside anomalous hardware telemetry diagnostics.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="styles.css">
@@ -27,7 +27,7 @@
             <span class="logo-icon">🪔</span>
             <div>
                 <h1 class="logo-title">Spectral Stories</h1>
-                <p class="logo-subtitle">Open-Source AI • Día de los Muertos & Haunted Telemetry</p>
+                <p class="logo-subtitle">Remembrance Altar & Environmental Telemetry</p>
             </div>
         </div>
 
@@ -37,13 +37,20 @@
                     <span class="tab-icon">🕯️</span> Digital Ofrenda
                 </button>
                 <button id="tabGhost" class="tab-btn" role="tab" aria-selected="false" onclick="switchMode('ghost')">
-                    <span class="tab-icon">👻</span> Ghost in the Machine (TabPFN)
+                    <span class="tab-icon">📡</span> Ghost in the Machine
                 </button>
             </div>
 
-            <button id="audioToggleBtn" class="audio-toggle" title="Toggle Ethereal Ambient Soundscape" onclick="toggleAudio()">
-                <span id="audioIcon">🔈</span> Ambient Sound
+            <button id="audioToggleBtn" class="audio-toggle" title="Toggle Ambient Wind Chimes" onclick="toggleAudio()">
+                <span id="audioIcon">🔈</span> Soundscape
             </button>
+
+            <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="github-header-btn" title="View Source on GitHub">
+                <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
         </nav>
     </header>
 
@@ -60,15 +67,15 @@
                     <span class="papel yellow">🌻 Recordar</span>
                     <span class="papel orange">🕯️ Honrar</span>
                     <span class="papel purple">🪔 Celebrar</span>
-                    <span class="papel pink">💀 Amar</span>
-                    <span class="papel teal">🕊️ Vivir</span>
+                    <span class="papel pink">💀 Tradición</span>
+                    <span class="papel teal">🕊️ Memoria</span>
                 </div>
 
                 <div class="hero-text">
-                    <h2 class="section-title">The Sacred Altar of Remembrance</h2>
+                    <h2 class="section-title">The Altar of Remembrance</h2>
                     <p class="section-desc">
-                        In the spirit of Día de los Muertos, no one is truly gone while they are remembered.
-                        Light a candle, place an offering, and let open-source AI weave scattered memories into an enduring memorial.
+                        In Mexican tradition, no one is truly gone so long as they remain in the stories we cherish.
+                        Place an offering, light a candle on the tiers, and inscribe an enduring tribute to those who shaped your journey.
                     </p>
                 </div>
             </div>
@@ -78,7 +85,7 @@
                 <div class="altar-viewport">
                     <div class="altar-tier tier-top">
                         <div class="portrait-frame" id="portraitFrame">
-                            <img id="portraitImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80" alt="Altar Portrait">
+                            <img id="portraitImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80" alt="Honored Portrait">
                             <div class="portrait-halo"></div>
                             <span class="portrait-caption" id="portraitNameDisplay">Manuel Romero</span>
                         </div>
@@ -112,15 +119,15 @@
                             <div class="flame lit"></div>
                             <div class="wax"></div>
                         </div>
-                        <div class="offering-slot" id="offeringSlot3">
+                        <div class="offering-slot" id="offeringSlot3" title="Agua Sagrada">
                             <span class="offering-icon">💧</span>
-                            <span class="offering-label">Agua Sagrada</span>
+                            <span class="offering-label">Agua Pura</span>
                         </div>
-                        <div class="offering-slot" id="offeringSlot4">
+                        <div class="offering-slot" id="offeringSlot4" title="Copal Incense">
                             <span class="offering-icon">💨</span>
-                            <span class="offering-label">Copal Incense</span>
+                            <span class="offering-label">Incienso Copal</span>
                         </div>
-                        <div class="offering-slot" id="offeringSlot5">
+                        <div class="offering-slot" id="offeringSlot5" title="Calaverita de Azúcar">
                             <span class="offering-icon">💀</span>
                             <span class="offering-label">Calaverita</span>
                         </div>
@@ -131,18 +138,18 @@
                     </div>
 
                     <div class="altar-footer-hint">
-                        💡 Click any candle to light or blow out the flame • Click offerings to toggle
+                        💡 Click candles to light or extinguish • Click offerings to place on the altar
                     </div>
                 </div>
 
                 <!-- Memorial Builder Form -->
                 <div class="memorial-card-panel">
                     <div class="panel-header">
-                        <h3>🕯️ Place Your Remembrance</h3>
+                        <h3>🕯️ Compose an Inscription</h3>
                         <div class="preset-pills">
-                            <span class="pill-label">Presets:</span>
+                            <span class="pill-label">Inspirations:</span>
                             <button type="button" class="preset-btn" onclick="loadPreset('grandfather')">Grandfather</button>
-                            <button type="button" class="preset-btn" onclick="loadPreset('companion')">Beloved Pet</button>
+                            <button type="button" class="preset-btn" onclick="loadPreset('companion')">Beloved Companion</button>
                             <button type="button" class="preset-btn" onclick="loadPreset('ada')">Ada Lovelace</button>
                         </div>
                     </div>
@@ -155,7 +162,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="honoreeRelation">Relationship</label>
+                                <label for="honoreeRelation">Their Connection to You</label>
                                 <input type="text" id="honoreeRelation" required placeholder="e.g. My Grandfather & Mentor" value="My Grandfather">
                             </div>
                         </div>
@@ -196,17 +203,17 @@
                         </div>
 
                         <button type="submit" id="invokeBtn" class="primary-btn pulse-glow">
-                            <span class="btn-icon">🪔</span> Invoke Memorial with Open AI
+                            <span class="btn-icon">🪔</span> Inscribe Memorial
                         </button>
                     </form>
 
                     <!-- Memorial Output Display Area -->
                     <div id="memorialOutput" class="memorial-output-box hidden">
                         <div class="output-header">
-                            <span class="output-badge" id="aiSourceBadge">Open-Source AI Memorial</span>
+                            <span class="output-badge" id="aiSourceBadge">Altar Inscription</span>
                             <div class="output-actions">
                                 <button id="narrateBtn" class="action-btn" onclick="narrateMemorial()" title="Listen to narration">
-                                    <span>🔊</span> Listen
+                                    <span>🔊</span> Read Aloud
                                 </button>
                                 <button class="action-btn" onclick="copyMemorial()" title="Copy tribute text">
                                     <span>📋</span> Copy
@@ -216,7 +223,7 @@
                         <h4 id="memorialTitle" class="memorial-title">In Loving Memory</h4>
                         <div id="memorialText" class="memorial-body-text"></div>
                         <div class="privacy-guarantee">
-                            🔒 <strong>Zero Corporate Surveillance:</strong> This memorial was processed in accordance with open-weight privacy. No personal grief data was retained or sold to closed cloud aggregators.
+                            🕯️ <em>"No one is truly gone as long as their name is spoken with love."</em> Your tribute remains private to this session.
                         </div>
                     </div>
                 </div>
@@ -225,17 +232,17 @@
 
 
         <!-- ============================================== -->
-        <!-- VIEW 2: GHOST IN THE MACHINE (TABPFN TELEMETRY) -->
+        <!-- VIEW 2: GHOST IN THE MACHINE (TELEMETRY LOGS)  -->
         <!-- ============================================== -->
         <section id="ghostSection" class="view-section">
             
             <div class="ghost-hero">
                 <div class="glitch-title-container">
-                    <span class="ghost-badge">PRIOR LABS TABPFN FOUNDATION MODEL</span>
-                    <h2 class="glitch-title" data-text="Ghost in the Machine">Ghost in the Machine</h2>
+                    <span class="ghost-badge">TELEMETRY ANOMALY LOG</span>
+                    <h2 class="glitch-title">Ghost in the Machine</h2>
                     <p class="section-desc">
-                        Our machines collect millions of sensor logs, thermal readings, and network packets.
-                        TabPFN analyzes tabular telemetry to isolate paranormal deviations—when something cold and uninvited walks through the wires.
+                        An environmental telemetry archive examining subtle sensor anomalies, midnight micro-freezes,
+                        and unexplained thermal drops recorded when the world is quiet.
                     </p>
                 </div>
             </div>
@@ -250,37 +257,37 @@
                         <label>Select Anomaly Log Source:</label>
                         <div class="dataset-buttons">
                             <button type="button" class="dataset-btn active" id="btnSmartHome" onclick="selectDataset('smart_home')">
-                                🏠 Smart Home (3:00 AM Cold Spot)
+                                🏠 Living Room Sensor Array (3:00 AM Cold Spot)
                             </button>
                             <button type="button" class="dataset-btn" id="btnServerRack" onclick="selectDataset('server_rack')">
-                                🖥️ Server Rack (Phantom Threads)
+                                🖥️ Server Array Telemetry (Phantom Threads)
                             </button>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="customCsvUpload">Or Upload Custom Sensor / System CSV:</label>
+                        <label for="customCsvUpload">Or Upload Custom Telemetry Log (.csv):</label>
                         <input type="file" id="customCsvUpload" accept=".csv" onchange="handleFileUpload(event)">
                     </div>
 
                     <div class="form-group">
                         <div class="slider-header">
-                            <label for="sensitivitySlider">TabPFN Anomaly Sensitivity:</label>
+                            <label for="sensitivitySlider">Detection Sensitivity Threshold:</label>
                             <span id="sensitivityVal" class="slider-badge">2.5σ</span>
                         </div>
                         <input type="range" id="sensitivitySlider" min="1.5" max="4.5" step="0.1" value="2.5" oninput="updateSensitivity(this.value)">
-                        <span class="field-hint">Higher values filter for only extreme Poltergeist-grade events.</span>
+                        <span class="field-hint">Higher values filter strictly for statistical outlier surges.</span>
                     </div>
 
                     <button type="button" id="scanBtn" class="primary-btn green-glow" onclick="runTabPfnScan()">
-                        <span class="btn-icon">⚡</span> Run TabPFN Anomaly Scan
+                        <span class="btn-icon">⚡</span> Scan Telemetry for Anomalies
                     </button>
 
                     <!-- Telemetry Stats Summary -->
                     <div id="statsSummary" class="stats-summary-grid hidden">
                         <div class="stat-card">
                             <span class="stat-val" id="statScanned">144</span>
-                            <span class="stat-lbl">Records Scanned</span>
+                            <span class="stat-lbl">Records Analyzed</span>
                         </div>
                         <div class="stat-card alert">
                             <span class="stat-val" id="statAnomalies">4</span>
@@ -288,7 +295,7 @@
                         </div>
                         <div class="stat-card danger">
                             <span class="stat-val" id="statHauntingIndex">86%</span>
-                            <span class="stat-lbl">Haunting Index</span>
+                            <span class="stat-lbl">Fluctuation Index</span>
                         </div>
                     </div>
                 </div>
@@ -297,7 +304,7 @@
                 <div class="telemetry-display-panel">
                     <div class="panel-header">
                         <h3>📈 Multi-Sensor Telemetry & Paranormal Spikes</h3>
-                        <span id="modelEngineBadge" class="engine-pill">Engine: TabPFN Prior Network</span>
+                        <span id="modelEngineBadge" class="engine-pill">Statistical Analysis Engine Active</span>
                     </div>
 
                     <!-- Interactive Timeline Canvas / SVG Chart -->
@@ -307,17 +314,17 @@
 
                     <!-- Isolated Anomalies Stream -->
                     <div class="anomalies-section">
-                        <h4>🚨 Detected Spectral Deviations</h4>
+                        <h4>🚨 Detected Environmental Deviations</h4>
                         <div id="anomaliesList" class="anomalies-scroll-list">
-                            <div class="empty-state">Click "Run TabPFN Anomaly Scan" to ingest and evaluate telemetry.</div>
+                            <div class="empty-state">Click "Scan Telemetry for Anomalies" to evaluate sensor logs.</div>
                         </div>
                     </div>
 
                     <!-- Gothic Lore Generation Box -->
                     <div id="loreBox" class="lore-box hidden">
                         <div class="lore-header">
-                            <span class="lore-badge">Gothic Entity Decode</span>
-                            <button class="action-btn" onclick="narrateLore()">🔊 Narrate</button>
+                            <span class="lore-badge">Incident Field Notes</span>
+                            <button class="action-btn" onclick="narrateLore()">🔊 Read Aloud</button>
                         </div>
                         <h4 id="loreTitle" class="lore-title">Incident Analysis</h4>
                         <p id="loreContent" class="lore-text"></p>
@@ -331,26 +338,37 @@
 
     </main>
 
-    <!-- Footer with Hacktoberfest Badges & Links -->
+    <!-- Refined Human Footer -->
     <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-col">
                 <span class="footer-title">Spectral Stories</span>
-                <p>Built for DEV Hacktoberfest 2026 Week 4: "Ghost in the Machine".</p>
-            </div>
-
-            <div class="footer-col">
-                <span class="footer-heading">Prize Categories</span>
-                <div class="category-badges">
-                    <span class="badge">🚀 Best Use of Render</span>
-                    <span class="badge">📊 Best Use of TabPFN</span>
-                    <span class="badge">🧠 Open-Source AI Core</span>
+                <p>An interactive digital ofrenda and hardware telemetry monitor exploring remembrance, memory, and environmental anomalies.</p>
+                <div class="heritage-note">
+                    🌼 <em>Día de los Muertos is celebrated every November 1st & 2nd.</em>
                 </div>
             </div>
 
             <div class="footer-col">
+                <span class="footer-heading">Project & Documentation</span>
+                <ul class="footer-links">
+                    <li>
+                        <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="footer-github-link">
+                            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                            </svg>
+                            <span>github.com/DracFiendMG/spectral-stories</span>
+                        </a>
+                    </li>
+                    <li><a href="/docs" target="_blank">API Specification</a></li>
+                    <li><a href="https://github.com/DracFiendMG/spectral-stories#quickstart" target="_blank">Setup & Architecture Guide</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
                 <span class="footer-heading">Open Source</span>
-                <p>Licensed under MIT. Zero trackers. All local & open-weight intelligence.</p>
+                <p>Distributed under the permissive <a href="https://github.com/DracFiendMG/spectral-stories/blob/main/LICENSE" target="_blank" class="footer-inline-link">MIT License</a>.</p>
+                <p class="copyright-text">Crafted with care and reverence. 2026.</p>
             </div>
         </div>
     </footer>

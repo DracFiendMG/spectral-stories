@@ -280,7 +280,7 @@ async function handleMemorialSubmit(e) {
     const offerings = Array.from(checkedBoxes).map(cb => cb.value);
 
     btn.disabled = true;
-    btn.innerHTML = `<span class="btn-icon">✨</span> Invoking Remembrance...`;
+    btn.innerHTML = `<span class="btn-icon">✨</span> Inscribing Remembrance...`;
 
     // Visual flare: light all candles if unlit
     for (let i = 1; i <= 5; i++) {
@@ -312,10 +312,10 @@ async function handleMemorialSubmit(e) {
             `In the sacred wisdom of our ancestors, a soul never truly perishes so long as their name is spoken with fondness ` +
             `and their deeds remembered with a smile. Tonight, ${name}, the candles dance in celebration of your life. Welcome home.`;
 
-        displayMemorial(`The Altar for ${name}`, fallbackEulogy, "Spectral Open Client Engine (Local Offline)");
+        displayMemorial(`The Altar for ${name}`, fallbackEulogy, "Altar Inscription");
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span class="btn-icon">🪔</span> Invoke Memorial with Open AI`;
+        btn.innerHTML = `<span class="btn-icon">🪔</span> Inscribe Memorial`;
     }
 }
 
@@ -327,7 +327,7 @@ function displayMemorial(title, text, source) {
 
     titleEl.textContent = title;
     textEl.textContent = text;
-    badgeEl.textContent = source || "Open-Source AI Memorial";
+    badgeEl.textContent = source || "Altar Inscription";
 
     outputBox.classList.remove('hidden');
     outputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -420,7 +420,7 @@ async function runTabPfnScan() {
     }
 
     btn.disabled = true;
-    btn.innerHTML = `<span class="btn-icon">⚡</span> Running TabPFN Inference...`;
+    btn.innerHTML = `<span class="btn-icon">⚡</span> Analyzing Sensor Logs...`;
 
     try {
         const res = await fetch(`${API_BASE}/api/detect`, {
@@ -438,7 +438,7 @@ async function runTabPfnScan() {
         renderTelemetryResults(clientResults);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span class="btn-icon">⚡</span> Run TabPFN Anomaly Scan`;
+        btn.innerHTML = `<span class="btn-icon">⚡</span> Scan Telemetry for Anomalies`;
     }
 }
 
@@ -508,7 +508,7 @@ function executeClientSideAnomalyScan(csvString, sensitivity) {
 
     return {
         status: "success",
-        model_engine: "TabPFN Statistical Prior Model",
+        model_engine: "Statistical Telemetry Model",
         total_records_scanned: rows.length,
         anomalies_detected: anomalies.length,
         haunting_index_pct: Math.min(100, Math.round(anomalies.length * 18.5)),
@@ -527,7 +527,7 @@ function renderTelemetryResults(data) {
     document.getElementById('statsSummary').classList.remove('hidden');
 
     // Update engine badge
-    document.getElementById('modelEngineBadge').textContent = `Engine: ${data.model_engine || 'Prior Labs TabPFN'}`;
+    document.getElementById('modelEngineBadge').textContent = 'Statistical Telemetry Analysis Active';
 
     // Render anomalies list
     const listEl = document.getElementById('anomaliesList');
@@ -553,7 +553,7 @@ function renderTelemetryResults(data) {
                     </span>
                 </div>
                 <button class="anomaly-action-btn" onclick="decodeAnomalyLore(${idx})">
-                    Decode Lore 👁️
+                    Investigate Event 📖
                 </button>
             `;
             listEl.appendChild(card);
@@ -641,7 +641,7 @@ async function decodeAnomalyLore(anomalyIndex) {
     const contentEl = document.getElementById('loreContent');
 
     titleEl.textContent = `Analyzing Anomaly at ${anomaly.timestamp}...`;
-    contentEl.textContent = "Communing with the open-source spirit model...";
+    contentEl.textContent = "Transcribing telemetry incident record...";
     loreBox.classList.remove('hidden');
     loreBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 

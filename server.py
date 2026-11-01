@@ -1,8 +1,7 @@
 """
 server.py
-Spectral Stories - FastAPI Web Service & AI Engine
-Provides endpoints for the Digital Ofrenda, TabPFN Anomaly Detection, and Gothic Haunting Lore.
-Compatible with Render web service deployment.
+Spectral Stories - FastAPI Web Service
+Digital Ofrenda & Haunted Telemetry Anomaly Detection
 """
 
 import os
@@ -18,11 +17,10 @@ from engine.story_engine import generate_ofrenda_memorial, generate_haunting_lor
 
 app = FastAPI(
     title="Spectral Stories API",
-    description="Digital Ofrenda & TabPFN Paranormal Anomaly Detection for Hacktoberfest 2026",
+    description="Interactive Digital Ofrenda & Telemetry Anomaly Detection",
     version="1.0.0"
 )
 
-# Enable CORS for local testing and web access
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -47,22 +45,21 @@ class LoreRequest(BaseModel):
 
 @app.get("/api/health")
 def health_check():
-    """Health check endpoint for Render deployment."""
+    """Health check endpoint."""
     return {
         "status": "online",
         "service": "Spectral Stories",
-        "tabpfn_engine": detector.has_tabpfn,
         "mode": "Active"
     }
 
 
 @app.post("/api/memorial")
-def create_memorial(req: MemorialRequest):
+async def create_memorial(req: MemorialRequest):
     """Generates an evocative Día de los Muertos remembrance tribute."""
     if not req.name.strip():
         raise HTTPException(status_code=400, detail="Name is required.")
     
-    result = generate_ofrenda_memorial(
+    result = await generate_ofrenda_memorial(
         name=req.name.strip(),
         relationship=req.relationship.strip() or "Beloved Friend",
         memory=req.memory.strip() or "The quiet warmth of your presence and unyielding kindness.",
@@ -73,7 +70,7 @@ def create_memorial(req: MemorialRequest):
 
 @app.post("/api/detect")
 def analyze_telemetry(req: AnomalyAnalyzeRequest):
-    """Analyzes CSV time-series telemetry using TabPFN tabular foundation network."""
+    """Analyzes CSV time-series telemetry for anomalous spikes."""
     try:
         results = detector.analyze_csv_content(req.csv_content, sensitivity=req.sensitivity)
         return results
@@ -83,7 +80,7 @@ def analyze_telemetry(req: AnomalyAnalyzeRequest):
 
 @app.post("/api/detect-file")
 async def analyze_telemetry_file(file: UploadFile = File(...), sensitivity: float = Form(2.5)):
-    """Upload CSV file for TabPFN anomaly detection."""
+    """Upload CSV file for telemetry anomaly detection."""
     try:
         content = (await file.read()).decode("utf-8")
         results = detector.analyze_csv_content(content, sensitivity=sensitivity)
@@ -94,7 +91,7 @@ async def analyze_telemetry_file(file: UploadFile = File(...), sensitivity: floa
 
 @app.get("/api/sample-data/{dataset}")
 def get_sample_dataset(dataset: str):
-    """Returns sample datasets: 'smart_home' or 'server_rack'."""
+    """Returns sample telemetry logs: 'smart_home' or 'server_rack'."""
     filename_map = {
         "smart_home": "data/smart_home_october.csv",
         "server_rack": "data/server_rack_telemetry.csv"
@@ -109,9 +106,9 @@ def get_sample_dataset(dataset: str):
 
 
 @app.post("/api/haunting-lore")
-def create_haunting_lore(req: LoreRequest):
-    """Generates gothic folklore from detected tabular anomalies."""
-    result = generate_haunting_lore(req.anomaly)
+async def create_haunting_lore(req: LoreRequest):
+    """Generates narrative lore from detected telemetry anomalies."""
+    result = await generate_haunting_lore(req.anomaly)
     return result
 
 

@@ -115,7 +115,31 @@ body {
 .nav-controls {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.github-header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.52rem 0.95rem;
+    border-radius: 24px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.github-header-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--cempasuchil-gold);
+    color: var(--cempasuchil-gold);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .mode-switcher {
@@ -667,25 +691,27 @@ body {
 }
 
 .ghost-badge {
-    background: rgba(100, 255, 218, 0.12);
+    background: rgba(100, 255, 218, 0.08);
     color: var(--ghost-cyan);
-    border: 1px solid rgba(100, 255, 218, 0.3);
-    padding: 0.3rem 0.9rem;
-    border-radius: 30px;
+    border: 1px solid rgba(100, 255, 218, 0.25);
+    padding: 0.25rem 0.85rem;
+    border-radius: 20px;
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
     display: inline-block;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
 }
 
 .glitch-title {
     font-family: var(--font-heading);
-    font-size: 2.6rem;
-    color: #fff;
-    text-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
-    letter-spacing: 0.05em;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.04em;
     margin-bottom: 0.5rem;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
 }
 
 .telemetry-dashboard-grid {
@@ -991,13 +1017,13 @@ input[type="range"] {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1fr;
+    grid-template-columns: 1.6fr 1.6fr 1.2fr;
     gap: 2.5rem;
 }
 
 .footer-title {
     font-family: var(--font-heading);
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--cempasuchil-gold);
     display: block;
@@ -1005,33 +1031,65 @@ input[type="range"] {
 }
 
 .footer-col p {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.heritage-note {
+    margin-top: 0.8rem;
+    font-size: 0.82rem;
+    color: var(--cempasuchil-gold);
+    opacity: 0.9;
 }
 
 .footer-heading {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-secondary);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
 }
 
-.category-badges {
+.footer-links {
+    list-style: none;
     display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.55rem;
 }
 
-.badge {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-subtle);
+.footer-links li a {
     color: var(--text-secondary);
-    padding: 0.3rem 0.7rem;
-    border-radius: 15px;
-    font-size: 0.75rem;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: var(--transition-smooth);
+}
+
+.footer-links li a:hover {
+    color: var(--cempasuchil-gold);
+    padding-left: 2px;
+}
+
+.footer-github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--cempasuchil-gold) !important;
+    font-weight: 500;
+}
+
+.footer-inline-link {
+    color: var(--cempasuchil-gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.copyright-text {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
 }
 
 /* Keyframe Animations */
