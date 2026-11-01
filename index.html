@@ -4,229 +4,274 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectral Stories — Digital Ofrenda & Environmental Telemetry</title>
-    <meta name="description" content="An interactive remembrance altar honoring Día de los Muertos tradition alongside anomalous hardware telemetry diagnostics.">
+    <meta name="description" content="An interactive remembrance altar honoring Día de los Muertos traditions alongside environmental telemetry diagnostics.">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Editorial Serif, Modern Sans, and Clean Monospace -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Main Stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%22.9em%22 font-size=%2290%22>🪔</text></svg>">
 </head>
 <body>
-    <!-- Background Canvas for Floating Cempasúchil Marigold Petals -->
+
+    <!-- Ambient Falling Cempasúchil Petals Canvas -->
     <canvas id="petalCanvas"></canvas>
 
-    <!-- Header Navigation -->
+    <!-- App Header & Navigation -->
     <header class="app-header">
-        <div class="logo-container">
-            <span class="logo-icon">🪔</span>
-            <div>
-                <h1 class="logo-title">Spectral Stories</h1>
-                <p class="logo-subtitle">Remembrance Altar & Environmental Telemetry</p>
+        <div class="header-left">
+            <div class="logo-container">
+                <span class="logo-icon" aria-hidden="true">🪔</span>
+                <div class="logo-text">
+                    <h1 class="logo-title">Spectral Stories</h1>
+                    <p class="logo-subtitle">Digital Ofrenda & Telemetry Lab</p>
+                </div>
             </div>
         </div>
 
-        <nav class="nav-controls">
+        <nav class="nav-center" aria-label="Main Navigation">
             <div class="mode-switcher" role="tablist">
                 <button id="tabOfrenda" class="tab-btn active" role="tab" aria-selected="true" onclick="switchMode('ofrenda')">
-                    <span class="tab-icon">🕯️</span> Digital Ofrenda
+                    <span class="tab-icon">🕯️</span>
+                    <span class="tab-label">Memorial Altar</span>
                 </button>
                 <button id="tabGhost" class="tab-btn" role="tab" aria-selected="false" onclick="switchMode('ghost')">
-                    <span class="tab-icon">📡</span> Ghost in the Machine
+                    <span class="tab-icon">📡</span>
+                    <span class="tab-label">Spectral Telemetry</span>
                 </button>
             </div>
+        </nav>
 
-            <button id="audioToggleBtn" class="audio-toggle" title="Toggle Ambient Wind Chimes" onclick="toggleAudio()">
-                <span id="audioIcon">🔈</span> Soundscape
+        <div class="header-right">
+            <button id="audioToggleBtn" class="audio-toggle-btn" title="Toggle Ambient Wind Chimes & Candlelight Hum" onclick="toggleAudio()" aria-label="Toggle Soundscape">
+                <span id="audioIcon">🔈</span>
+                <span class="btn-text">Soundscape</span>
             </button>
+            
+            <div class="header-vdivider"></div>
 
-            <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="github-header-btn" title="View Source on GitHub">
-                <svg height="18" width="18" viewBox="0 0 16 16" fill="currentColor">
+            <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="github-repo-pill" title="View Source on GitHub">
+                <svg class="github-icon" height="18" width="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                     <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
-                <span>GitHub</span>
+                <span class="github-repo-name">spectral-stories</span>
+                <span class="github-star-pill">★ Star</span>
             </a>
-        </nav>
+        </div>
     </header>
 
-    <!-- Main Content Container -->
+    <!-- Delicate Papel Picado Accent Garland -->
+    <div class="papel-picado-garland" aria-hidden="true">
+        <div class="garland-line"></div>
+        <div class="garland-flags">
+            <span class="flag gold">🌼 Recordar</span>
+            <span class="flag orange">🕯️ Honrar</span>
+            <span class="flag purple">🪔 Celebrar</span>
+            <span class="flag pink">💀 Tradición</span>
+            <span class="flag teal">🕊️ Memoria</span>
+        </div>
+    </div>
+
+    <!-- Main Workspace Container -->
     <main class="main-container">
-        
+
         <!-- ============================================== -->
         <!-- VIEW 1: DIGITAL OFRENDA (MEMORIAL REMEMBRANCE) -->
         <!-- ============================================== -->
         <section id="ofrendaSection" class="view-section active">
-            
-            <div class="altar-hero">
-                <div class="papel-picado-banner">
-                    <span class="papel yellow">🌻 Recordar</span>
-                    <span class="papel orange">🕯️ Honrar</span>
-                    <span class="papel purple">🪔 Celebrar</span>
-                    <span class="papel pink">💀 Tradición</span>
-                    <span class="papel teal">🕊️ Memoria</span>
-                </div>
 
-                <div class="hero-text">
-                    <h2 class="section-title">The Altar of Remembrance</h2>
-                    <p class="section-desc">
-                        In Mexican tradition, no one is truly gone so long as they remain in the stories we cherish.
-                        Place an offering, light a candle on the tiers, and inscribe an enduring tribute to those who shaped your journey.
-                    </p>
-                </div>
+            <!-- Section Introduction -->
+            <div class="section-hero">
+                <h2 class="hero-title">The Altar of Remembrance</h2>
+                <p class="hero-desc">
+                    In Mexican heritage, our departed loved ones remain alive through the stories we recount and the light we keep burning.
+                    Light the candles on the tiers, place offerings, and inscribe an enduring tribute.
+                </p>
             </div>
 
-            <div class="ofrenda-layout">
-                <!-- Interactive Tiered Altar Viewport -->
-                <div class="altar-viewport">
-                    <div class="altar-tier tier-top">
-                        <div class="portrait-frame" id="portraitFrame">
-                            <img id="portraitImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80" alt="Honored Portrait">
-                            <div class="portrait-halo"></div>
-                            <span class="portrait-caption" id="portraitNameDisplay">Manuel Romero</span>
+            <div class="ofrenda-grid">
+
+                <!-- Left Column: Interactive Tiered Altar -->
+                <div class="altar-card">
+                    <div class="altar-card-header">
+                        <span class="card-badge">🕯️ Interactive Ofrenda</span>
+                        <span class="altar-hint-text">Click candles to light/unlight • Click offerings to place</span>
+                    </div>
+
+                    <div class="altar-structure">
+                        <!-- Tier 1: Top Tier (Portrait) -->
+                        <div class="altar-shelf tier-top">
+                            <div class="portrait-frame" id="portraitFrame">
+                                <img id="portraitImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&auto=format&fit=crop&q=80" alt="Honored Portrait">
+                                <div class="portrait-halo"></div>
+                                <span class="portrait-caption" id="portraitNameDisplay">Manuel Romero</span>
+                            </div>
+                        </div>
+
+                        <!-- Tier 2: Middle Tier (Candles & Primary Offerings) -->
+                        <div class="altar-shelf tier-middle">
+                            <div class="candle" id="candle1" onclick="toggleCandle(1)" title="Candle 1: Click to toggle flame">
+                                <div class="flame lit"></div>
+                                <div class="wax"></div>
+                            </div>
+
+                            <div class="offering-slot placed" id="offeringSlot1" title="Pan de Muerto (Nourishment for the Journey)" onclick="toggleOfferingFromAltar('Pan de Muerto')">
+                                <span class="offering-icon">🍞</span>
+                                <span class="offering-label">Pan de Muerto</span>
+                            </div>
+
+                            <div class="candle" id="candle2" onclick="toggleCandle(2)" title="Candle 2: Click to toggle flame">
+                                <div class="flame lit"></div>
+                                <div class="wax"></div>
+                            </div>
+
+                            <div class="offering-slot placed" id="offeringSlot2" title="Cempasúchil Flowers (Path of Golden Petals)" onclick="toggleOfferingFromAltar('Cempasúchil Marigolds')">
+                                <span class="offering-icon">🌼</span>
+                                <span class="offering-label">Cempasúchil</span>
+                            </div>
+
+                            <div class="candle" id="candle3" onclick="toggleCandle(3)" title="Candle 3: Click to toggle flame">
+                                <div class="flame lit"></div>
+                                <div class="wax"></div>
+                            </div>
+                        </div>
+
+                        <!-- Tier 3: Bottom Tier (Vessels, Incense & Secondary Offerings) -->
+                        <div class="altar-shelf tier-bottom">
+                            <div class="candle" id="candle4" onclick="toggleCandle(4)" title="Candle 4: Click to toggle flame">
+                                <div class="flame lit"></div>
+                                <div class="wax"></div>
+                            </div>
+
+                            <div class="offering-slot placed" id="offeringSlot3" title="Agua Pura (To Quench the Spirit's Thirst)" onclick="toggleOfferingFromAltar('Fresh Well Water')">
+                                <span class="offering-icon">💧</span>
+                                <span class="offering-label">Agua Pura</span>
+                            </div>
+
+                            <div class="offering-slot placed" id="offeringSlot4" title="Copal Incense (Purifying Smoke Rising to the Heavens)" onclick="toggleOfferingFromAltar('Fragrant Copal Incense')">
+                                <span class="offering-icon">💨</span>
+                                <span class="offering-label">Incienso Copal</span>
+                            </div>
+
+                            <div class="offering-slot placed" id="offeringSlot5" title="Calaverita (Sugar Skull celebrating Life)" onclick="toggleOfferingFromAltar('Sugar Skull (Calavera)')">
+                                <span class="offering-icon">💀</span>
+                                <span class="offering-label">Calaverita</span>
+                            </div>
+
+                            <div class="candle" id="candle5" onclick="toggleCandle(5)" title="Candle 5: Click to toggle flame">
+                                <div class="flame lit"></div>
+                                <div class="wax"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="altar-tier tier-middle">
-                        <div class="candle" id="candle1" onclick="toggleCandle(1)" title="Click to light/unlight candle">
-                            <div class="flame lit"></div>
-                            <div class="wax"></div>
+                    <div class="altar-card-footer">
+                        <div class="altar-status">
+                            <span class="status-indicator live"></span>
+                            <span id="altarCandleCount">5 candles illuminated</span>
                         </div>
-                        <div class="offering-slot" id="offeringSlot1" title="Pan de Muerto (Offering)">
-                            <span class="offering-icon">🍞</span>
-                            <span class="offering-label">Pan de Muerto</span>
-                        </div>
-                        <div class="candle" id="candle2" onclick="toggleCandle(2)" title="Click to light/unlight candle">
-                            <div class="flame lit"></div>
-                            <div class="wax"></div>
-                        </div>
-                        <div class="offering-slot" id="offeringSlot2" title="Cempasúchil Flowers">
-                            <span class="offering-icon">🌼</span>
-                            <span class="offering-label">Cempasúchil</span>
-                        </div>
-                        <div class="candle" id="candle3" onclick="toggleCandle(3)" title="Click to light/unlight candle">
-                            <div class="flame lit"></div>
-                            <div class="wax"></div>
-                        </div>
-                    </div>
-
-                    <div class="altar-tier tier-bottom">
-                        <div class="candle" id="candle4" onclick="toggleCandle(4)">
-                            <div class="flame lit"></div>
-                            <div class="wax"></div>
-                        </div>
-                        <div class="offering-slot" id="offeringSlot3" title="Agua Sagrada">
-                            <span class="offering-icon">💧</span>
-                            <span class="offering-label">Agua Pura</span>
-                        </div>
-                        <div class="offering-slot" id="offeringSlot4" title="Copal Incense">
-                            <span class="offering-icon">💨</span>
-                            <span class="offering-label">Incienso Copal</span>
-                        </div>
-                        <div class="offering-slot" id="offeringSlot5" title="Calaverita de Azúcar">
-                            <span class="offering-icon">💀</span>
-                            <span class="offering-label">Calaverita</span>
-                        </div>
-                        <div class="candle" id="candle5" onclick="toggleCandle(5)">
-                            <div class="flame lit"></div>
-                            <div class="wax"></div>
-                        </div>
-                    </div>
-
-                    <div class="altar-footer-hint">
-                        💡 Click candles to light or extinguish • Click offerings to place on the altar
+                        <span class="altar-tradition-note">Día de los Muertos • Nov 1–2</span>
                     </div>
                 </div>
 
-                <!-- Memorial Builder Form -->
-                <div class="memorial-card-panel">
-                    <div class="panel-header">
-                        <h3>🕯️ Compose an Inscription</h3>
-                        <div class="preset-pills">
-                            <span class="pill-label">Inspirations:</span>
-                            <button type="button" class="preset-btn" onclick="loadPreset('grandfather')">Grandfather</button>
-                            <button type="button" class="preset-btn" onclick="loadPreset('companion')">Beloved Companion</button>
-                            <button type="button" class="preset-btn" onclick="loadPreset('ada')">Ada Lovelace</button>
+                <!-- Right Column: Memorial Inscription Builder -->
+                <div class="composer-card">
+                    <div class="composer-header">
+                        <div>
+                            <h3 class="composer-title">Inscribe a Remembrance</h3>
+                            <p class="composer-subtitle">Share cherished memories to compose an enduring memorial tribute.</p>
+                        </div>
+                        
+                        <!-- Quick Inspirations Chips -->
+                        <div class="inspiration-chips">
+                            <span class="inspiration-label">Inspirations:</span>
+                            <button type="button" class="preset-chip" onclick="loadPreset('grandfather')">Grandfather</button>
+                            <button type="button" class="preset-chip" onclick="loadPreset('companion')">Companion</button>
+                            <button type="button" class="preset-chip" onclick="loadPreset('ada')">Ada Lovelace</button>
                         </div>
                     </div>
 
-                    <form id="memorialForm" onsubmit="handleMemorialSubmit(event)">
+                    <form id="memorialForm" onsubmit="handleMemorialSubmit(event)" class="memorial-form">
                         <div class="form-row">
-                            <div class="form-group">
+                            <div class="form-field">
                                 <label for="honoreeName">Name of the Honored</label>
                                 <input type="text" id="honoreeName" required placeholder="e.g. Manuel Romero" value="Manuel Romero">
                             </div>
 
-                            <div class="form-group">
-                                <label for="honoreeRelation">Their Connection to You</label>
+                            <div class="form-field">
+                                <label for="honoreeRelation">Connection to You</label>
                                 <input type="text" id="honoreeRelation" required placeholder="e.g. My Grandfather & Mentor" value="My Grandfather">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="honoreeMemory">A Cherished Memory or Passion</label>
+                        <div class="form-field">
+                            <label for="honoreeMemory">A Cherished Memory, Habit, or Passion</label>
                             <textarea id="honoreeMemory" rows="3" required placeholder="What made them smile? A favorite phrase, habit, or story you cherish...">He spent 40 years repairing antique mechanical clocks. He taught me that every ticking escapement was a small heartbeat keeping time alive, and his workshop always smelled of cedar wood and warm espresso.</textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label>Traditional Offerings (*Ofrendas*)</label>
-                            <div class="offerings-selector">
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Cempasúchil Marigolds" checked>
-                                    <span>🌼 Marigolds</span>
+                        <div class="form-field">
+                            <label>Traditional Offerings on the Altar</label>
+                            <div class="offerings-chip-grid">
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Cempasúchil Marigolds" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">🌼 Marigolds</span>
                                 </label>
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Pan de Muerto" checked>
-                                    <span>🍞 Pan de Muerto</span>
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Pan de Muerto" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">🍞 Pan de Muerto</span>
                                 </label>
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Candlelight (Veladoras)" checked>
-                                    <span>🕯️ Candlelight</span>
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Candlelight (Veladoras)" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">🕯️ Candlelight</span>
                                 </label>
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Fresh Well Water" checked>
-                                    <span>💧 Sacred Water</span>
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Fresh Well Water" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">💧 Sacred Water</span>
                                 </label>
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Fragrant Copal Incense" checked>
-                                    <span>💨 Copal Incense</span>
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Fragrant Copal Incense" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">💨 Copal Incense</span>
                                 </label>
-                                <label class="offering-checkbox">
-                                    <input type="checkbox" name="offerings" value="Sugar Skull (Calavera)" checked>
-                                    <span>💀 Calaverita</span>
+                                <label class="offering-chip">
+                                    <input type="checkbox" name="offerings" value="Sugar Skull (Calavera)" checked onchange="syncOfferingCheckbox(this)">
+                                    <span class="chip-content">💀 Calaverita</span>
                                 </label>
                             </div>
                         </div>
 
-                        <button type="submit" id="invokeBtn" class="primary-btn pulse-glow">
-                            <span class="btn-icon">🪔</span> Inscribe Memorial
+                        <button type="submit" id="invokeBtn" class="invoke-btn">
+                            <span class="btn-icon">🕯️</span>
+                            <span>Weave Memorial Tribute</span>
                         </button>
                     </form>
 
-                    <!-- Memorial Output Display Area -->
-                    <div id="memorialOutput" class="memorial-output-box hidden">
-                        <div class="output-header">
-                            <span class="output-badge" id="aiSourceBadge">Altar Inscription</span>
-                            <div class="output-actions">
-                                <button id="narrateBtn" class="action-btn" onclick="narrateMemorial()" title="Listen to narration">
+                    <!-- Memorial Inscription Plaque (Parchment Output) -->
+                    <div id="memorialOutput" class="memorial-parchment hidden">
+                        <div class="parchment-border-top"></div>
+                        <div class="parchment-header">
+                            <span class="parchment-badge" id="aiSourceBadge">Memorial Inscription</span>
+                            <div class="parchment-actions">
+                                <button id="narrateBtn" class="parchment-btn" onclick="narrateMemorial()" title="Listen to narration">
                                     <span>🔊</span> Read Aloud
                                 </button>
-                                <button class="action-btn" onclick="copyMemorial()" title="Copy tribute text">
-                                    <span>📋</span> Copy
+                                <button class="parchment-btn" onclick="copyMemorial()" title="Copy tribute text">
+                                    <span>📋</span> Copy Text
                                 </button>
                             </div>
                         </div>
+
                         <h4 id="memorialTitle" class="memorial-title">In Loving Memory</h4>
                         <div id="memorialText" class="memorial-body-text"></div>
-                        <div class="privacy-guarantee">
-                            🕯️ <em>"No one is truly gone as long as their name is spoken with love."</em> Your tribute remains private to this session.
+
+                        <div class="parchment-footer">
+                            <span class="parchment-quote">🕯️ "No one is truly gone as long as their name is spoken with love."</span>
+                            <span class="parchment-privacy">Private to your browser session</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -235,140 +280,174 @@
         <!-- VIEW 2: GHOST IN THE MACHINE (TELEMETRY LOGS)  -->
         <!-- ============================================== -->
         <section id="ghostSection" class="view-section">
-            
-            <div class="ghost-hero">
-                <div class="glitch-title-container">
-                    <span class="ghost-badge">TELEMETRY ANOMALY LOG</span>
-                    <h2 class="glitch-title">Ghost in the Machine</h2>
-                    <p class="section-desc">
-                        An environmental telemetry archive examining subtle sensor anomalies, midnight micro-freezes,
-                        and unexplained thermal drops recorded when the world is quiet.
-                    </p>
-                </div>
+
+            <!-- Section Introduction -->
+            <div class="section-hero">
+                <div class="hero-badge">ENVIRONMENTAL SENSOR ARCHIVE</div>
+                <h2 class="hero-title">Ghost in the Machine</h2>
+                <p class="hero-desc">
+                    Examine subtle sensor anomalies, midnight thermal drops, and electromagnetic variance
+                    recorded during quiet hours when unexplained patterns emerge.
+                </p>
             </div>
 
-            <div class="telemetry-dashboard-grid">
-                
-                <!-- Telemetry Control Panel -->
-                <div class="telemetry-controls-panel">
-                    <h3>📊 Telemetry Ingestion & Settings</h3>
-                    
-                    <div class="form-group">
-                        <label>Select Anomaly Log Source:</label>
-                        <div class="dataset-buttons">
-                            <button type="button" class="dataset-btn active" id="btnSmartHome" onclick="selectDataset('smart_home')">
-                                🏠 Living Room Sensor Array (3:00 AM Cold Spot)
+            <div class="telemetry-grid">
+
+                <!-- Left Column: Telemetry Controls & Source Ingestion -->
+                <div class="telemetry-sidebar">
+                    <div class="sidebar-block">
+                        <h3 class="block-title">📊 Sensor Log Ingestion</h3>
+                        <p class="block-desc">Select an environmental data stream or supply your own CSV log.</p>
+
+                        <div class="dataset-pill-group">
+                            <button type="button" class="dataset-pill active" id="btnSmartHome" onclick="selectDataset('smart_home')">
+                                <span class="pill-dot"></span>
+                                <div class="pill-text">
+                                    <strong>Living Room Sensor Array</strong>
+                                    <small>3:00 AM Sudden Thermal Drop (-4.2°C)</small>
+                                </div>
                             </button>
-                            <button type="button" class="dataset-btn" id="btnServerRack" onclick="selectDataset('server_rack')">
-                                🖥️ Server Array Telemetry (Phantom Threads)
+                            <button type="button" class="dataset-pill" id="btnServerRack" onclick="selectDataset('server_rack')">
+                                <span class="pill-dot"></span>
+                                <div class="pill-text">
+                                    <strong>Server Array Telemetry</strong>
+                                    <small>Midnight Phantom CPU Threads & I/O Spikes</small>
+                                </div>
                             </button>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="customCsvUpload">Or Upload Custom Telemetry Log (.csv):</label>
-                        <input type="file" id="customCsvUpload" accept=".csv" onchange="handleFileUpload(event)">
+                    <div class="sidebar-block">
+                        <label class="custom-file-label" for="customCsvUpload">
+                            <span>📁 Or Upload Custom CSV Telemetry:</span>
+                            <input type="file" id="customCsvUpload" accept=".csv" onchange="handleFileUpload(event)">
+                        </label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="sidebar-block">
                         <div class="slider-header">
-                            <label for="sensitivitySlider">Detection Sensitivity Threshold:</label>
+                            <label for="sensitivitySlider" class="slider-label">Sensitivity Threshold</label>
                             <span id="sensitivityVal" class="slider-badge">2.5σ</span>
                         </div>
                         <input type="range" id="sensitivitySlider" min="1.5" max="4.5" step="0.1" value="2.5" oninput="updateSensitivity(this.value)">
-                        <span class="field-hint">Higher values filter strictly for statistical outlier surges.</span>
+                        <div class="slider-labels">
+                            <span>Broad (1.5σ)</span>
+                            <span>Standard (2.5σ)</span>
+                            <span>Strict (4.5σ)</span>
+                        </div>
                     </div>
 
-                    <button type="button" id="scanBtn" class="primary-btn green-glow" onclick="runTabPfnScan()">
-                        <span class="btn-icon">⚡</span> Scan Telemetry for Anomalies
+                    <button type="button" id="scanBtn" class="telemetry-scan-btn" onclick="runTabPfnScan()">
+                        <span class="btn-icon">⚡</span>
+                        <span>Analyze Telemetry Logs</span>
                     </button>
 
-                    <!-- Telemetry Stats Summary -->
-                    <div id="statsSummary" class="stats-summary-grid hidden">
-                        <div class="stat-card">
-                            <span class="stat-val" id="statScanned">144</span>
-                            <span class="stat-lbl">Records Analyzed</span>
+                    <!-- Anomaly Summary Metrics -->
+                    <div id="statsSummary" class="metrics-grid hidden">
+                        <div class="metric-card">
+                            <span class="metric-number" id="statScanned">144</span>
+                            <span class="metric-label">Points Evaluated</span>
                         </div>
-                        <div class="stat-card alert">
-                            <span class="stat-val" id="statAnomalies">4</span>
-                            <span class="stat-lbl">Outliers Isolated</span>
+                        <div class="metric-card highlight">
+                            <span class="metric-number" id="statAnomalies">4</span>
+                            <span class="metric-label">Outliers Isolated</span>
                         </div>
-                        <div class="stat-card danger">
-                            <span class="stat-val" id="statHauntingIndex">86%</span>
-                            <span class="stat-lbl">Fluctuation Index</span>
+                        <div class="metric-card warning">
+                            <span class="metric-number" id="statHauntingIndex">86%</span>
+                            <span class="metric-label">Variance Index</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Telemetry Visualization & Lore Column -->
-                <div class="telemetry-display-panel">
-                    <div class="panel-header">
-                        <h3>📈 Multi-Sensor Telemetry & Paranormal Spikes</h3>
-                        <span id="modelEngineBadge" class="engine-pill">Statistical Analysis Engine Active</span>
-                    </div>
+                <!-- Right Column: Interactive Timeline & Lore Insights -->
+                <div class="telemetry-main">
+                    <div class="telemetry-card">
+                        <div class="card-header-bar">
+                            <h3 class="card-bar-title">📈 Multi-Sensor Telemetry & Anomalous Spikes</h3>
+                            <span id="modelEngineBadge" class="engine-badge">Statistical Model Engine Ready</span>
+                        </div>
 
-                    <!-- Interactive Timeline Canvas / SVG Chart -->
-                    <div class="chart-container">
-                        <canvas id="telemetryChart" height="200"></canvas>
-                    </div>
-
-                    <!-- Isolated Anomalies Stream -->
-                    <div class="anomalies-section">
-                        <h4>🚨 Detected Environmental Deviations</h4>
-                        <div id="anomaliesList" class="anomalies-scroll-list">
-                            <div class="empty-state">Click "Scan Telemetry for Anomalies" to evaluate sensor logs.</div>
+                        <!-- Chart Canvas -->
+                        <div class="chart-wrapper">
+                            <canvas id="telemetryChart" height="220"></canvas>
                         </div>
                     </div>
 
-                    <!-- Gothic Lore Generation Box -->
-                    <div id="loreBox" class="lore-box hidden">
-                        <div class="lore-header">
-                            <span class="lore-badge">Incident Field Notes</span>
-                            <button class="action-btn" onclick="narrateLore()">🔊 Read Aloud</button>
+                    <!-- Detected Deviations Stream -->
+                    <div class="telemetry-card">
+                        <div class="card-header-bar">
+                            <h4 class="card-bar-title">🚨 Isolated Environmental Deviations</h4>
                         </div>
-                        <h4 id="loreTitle" class="lore-title">Incident Analysis</h4>
-                        <p id="loreContent" class="lore-text"></p>
+                        <div id="anomaliesList" class="anomalies-list">
+                            <div class="empty-state">Click "Analyze Telemetry Logs" to evaluate sensor variance across time.</div>
+                        </div>
                     </div>
 
+                    <!-- Lore Dossier Card -->
+                    <div id="loreBox" class="lore-dossier hidden">
+                        <div class="dossier-header">
+                            <div class="dossier-tag">INCIDENT FIELD LOG</div>
+                            <button class="dossier-btn" onclick="narrateLore()">
+                                <span>🔊</span> Read Incident Log
+                            </button>
+                        </div>
+                        <h4 id="loreTitle" class="dossier-title">Incident Analysis</h4>
+                        <p id="loreContent" class="dossier-body"></p>
+                    </div>
                 </div>
 
             </div>
-
         </section>
 
     </main>
 
-    <!-- Refined Human Footer -->
+    <!-- Refined Human-Crafted Footer -->
     <footer class="app-footer">
-        <div class="footer-content">
-            <div class="footer-col">
-                <span class="footer-title">Spectral Stories</span>
-                <p>An interactive digital ofrenda and hardware telemetry monitor exploring remembrance, memory, and environmental anomalies.</p>
-                <div class="heritage-note">
-                    🌼 <em>Día de los Muertos is celebrated every November 1st & 2nd.</em>
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <span class="footer-icon">🪔</span>
+                    <span class="footer-title">Spectral Stories</span>
+                </div>
+                <p class="footer-desc">An interactive digital ofrenda and hardware telemetry laboratory honoring remembrance and exploring subtle environmental anomalies.</p>
+                <div class="heritage-badge">
+                    <span>🌼 Día de los Muertos — Celebrated every November 1st & 2nd</span>
                 </div>
             </div>
 
-            <div class="footer-col">
-                <span class="footer-heading">Project & Documentation</span>
-                <ul class="footer-links">
-                    <li>
-                        <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="footer-github-link">
-                            <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                            </svg>
-                            <span>github.com/DracFiendMG/spectral-stories</span>
-                        </a>
-                    </li>
-                    <li><a href="/docs" target="_blank">API Specification</a></li>
-                    <li><a href="https://github.com/DracFiendMG/spectral-stories#quickstart" target="_blank">Setup & Architecture Guide</a></li>
-                </ul>
+            <div class="footer-col github-col">
+                <span class="footer-heading">Open Source Project</span>
+                <div class="footer-github-box">
+                    <div class="gh-box-top">
+                        <svg class="gh-box-icon" height="22" width="22" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                        <div class="gh-box-meta">
+                            <a href="https://github.com/DracFiendMG/spectral-stories" target="_blank" rel="noopener noreferrer" class="gh-box-link">
+                                DracFiendMG / spectral-stories
+                            </a>
+                            <span class="gh-box-desc">GitHub Repository & Source Code</span>
+                        </div>
+                    </div>
+                    <div class="gh-box-links">
+                        <a href="https://github.com/DracFiendMG/spectral-stories#quickstart" target="_blank" rel="noopener noreferrer">Setup Guide</a>
+                        <span class="dot">•</span>
+                        <a href="/docs" target="_blank" rel="noopener noreferrer">API Reference</a>
+                        <span class="dot">•</span>
+                        <a href="https://github.com/DracFiendMG/spectral-stories/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+                    </div>
+                </div>
             </div>
 
-            <div class="footer-col">
-                <span class="footer-heading">Open Source</span>
-                <p>Distributed under the permissive <a href="https://github.com/DracFiendMG/spectral-stories/blob/main/LICENSE" target="_blank" class="footer-inline-link">MIT License</a>.</p>
-                <p class="copyright-text">Crafted with care and reverence. 2026.</p>
+            <div class="footer-col colophon-col">
+                <span class="footer-heading">Colophon</span>
+                <p class="colophon-text">Crafted with care, reverence, and code. Built for contemplation and discovery.</p>
+                <div class="engine-tag-row">
+                    <span class="engine-tag">Backboard SDK</span>
+                    <span class="engine-tag">Gemma 4</span>
+                    <span class="engine-tag">FastAPI</span>
+                </div>
+                <p class="copyright-line">© 2026 Spectral Stories. Open Source under MIT.</p>
             </div>
         </div>
     </footer>

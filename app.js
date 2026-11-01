@@ -26,7 +26,7 @@ let ambientInterval = null;
 const petalCanvas = document.getElementById('petalCanvas');
 const ctx = petalCanvas.getContext('2d');
 let petals = [];
-const PETAL_COUNT = 38;
+const PETAL_COUNT = 20;
 
 function resizeCanvas() {
     petalCanvas.width = window.innerWidth;
@@ -224,8 +224,52 @@ function toggleCandle(num) {
     const candleEl = document.getElementById(`candle${num}`);
     if (candleEl) {
         const flame = candleEl.querySelector('.flame');
-        flame.classList.toggle('lit');
+        flame.classList.toggle('unlit');
         playCandleClickSound();
+        updateCandleCount();
+    }
+}
+
+function updateCandleCount() {
+    const activeCandles = document.querySelectorAll('.flame:not(.unlit)');
+    const countEl = document.getElementById('altarCandleCount');
+    if (countEl) {
+        countEl.textContent = `${activeCandles.length} candle${activeCandles.length === 1 ? '' : 's'} illuminated`;
+    }
+}
+
+const OFFERING_SLOT_MAP = {
+    'Pan de Muerto': 'offeringSlot1',
+    'Cempasúchil Marigolds': 'offeringSlot2',
+    'Fresh Well Water': 'offeringSlot3',
+    'Fragrant Copal Incense': 'offeringSlot4',
+    'Sugar Skull (Calavera)': 'offeringSlot5'
+};
+
+function toggleOfferingFromAltar(offeringName) {
+    initAudio();
+    const cbs = document.querySelectorAll('input[name="offerings"]');
+    for (const cb of cbs) {
+        if (cb.value === offeringName) {
+            cb.checked = !cb.checked;
+            syncOfferingCheckbox(cb);
+            playChime(660);
+            break;
+        }
+    }
+}
+
+function syncOfferingCheckbox(checkbox) {
+    const slotId = OFFERING_SLOT_MAP[checkbox.value];
+    if (slotId) {
+        const slotEl = document.getElementById(slotId);
+        if (slotEl) {
+            if (checkbox.checked) {
+                slotEl.classList.add('placed');
+            } else {
+                slotEl.classList.remove('placed');
+            }
+        }
     }
 }
 
@@ -315,7 +359,7 @@ async function handleMemorialSubmit(e) {
         displayMemorial(`The Altar for ${name}`, fallbackEulogy, "Altar Inscription");
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span class="btn-icon">🪔</span> Inscribe Memorial`;
+        btn.innerHTML = `<span class="btn-icon">🕯️</span> Weave Memorial Tribute`;
     }
 }
 
